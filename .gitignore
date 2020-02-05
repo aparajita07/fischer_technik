@@ -1,0 +1,14 @@
+# Git Ignore the following files
+
+# MacOS
+.DS_Store
+
+# Latex
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdf
+*.gz
+
