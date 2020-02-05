@@ -6,10 +6,10 @@ The document is written in LaTeX and contains functional design specification fo
 The **workflow** to work within this repository
 - **Fork** the [original repository](https://github.com/aparajita07/fischer_technik) to your own account.
 - Clone the repository: ```git clone *accountURL*/fischer_technik```.
-- Setup upstream repo: ```git remote add upstream https://github.com/aparajita07/fischer_technik``` (if you are in a subtask, use the account of the subtask leader).
-- Make changes on your computer
+- Setup upstream repo: ```git remote add upstream https://github.com/aparajita07/fischer_technik``` 
+- Make changes on your computer, then type
 	- `git add *`
 	- `git commit`
-	- `git push  origin devBranch`, where origin points to your forked repository.
-- Make a pull request from the GitHub site.
-- You should sync your copy of the original repository before making changes (so that you are up to date) with a ``` git pull upstream```, where upstream refers to the original cloud repository's *devBranch*.
+	- `git push  origin master`, where origin points to your forked repository.
+- Make a pull request from your GitHub account, where the repository is.
+- You should sync your copy of the original repository before making changes (so that you are up to date) with a ``` git fetch upstream master```, and then ```git merge``` with your files.
