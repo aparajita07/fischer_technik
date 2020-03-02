@@ -1,0 +1,51 @@
+% Introduction
+The purpose of the ``Assembly Line''project is to have a public demonstrator that corroborates the potential of the open source Arrowhead Framework in an industrial IoT\footnote{Internet of Things.} automation setting.
+Simultaneously, it  promotes knowledge transfer of the Arrowhead Framework as a documented example.
+
+Physically, the assembly line is a fischertechnik ``toy'' developed for Industry 4.0 education \cite{fischertechnik}.
+It is designated ``Indexed line with 2 machining stations 24\~V''\footnote{The documentation with that came with the assembly line can be found at the end of this document and includes a picture of the line.}.
+It consists of two machining stations, a mill and a drill, where items are transported to each machine via conveyor belts.
+The parts ``being'' machined are cylinders.
+There are four conveyor belts:
+\begin{enumerate}
+ \item the loading conveyor belt, which receives the part and starts the whole process,
+ \item the milling conveyor belt, which stops halfway to mill the part,
+ \item the drilling conveyor belt, which stops halfway to drill the part.
+ \item the offloading conveyor belt, which brings the part to be picked up and terminates the process.
+\end{enumerate}
+Conveyor belts 1 and 2, as well as 3 and 4 are at 90$^\circ$ from each other.
+At each corner, a motorized slider pushes the part from one conveyor belt to the next and should then retract.
+The conveyor belts have only one control signal, which is either on or off.
+The motorized sliders have two exclusive\footnote{The PLC programmer should ensure not to have both directional requests at the same time.}  control signals: forward and backward,
+
+\subsection{Control logic}
+
+To coordinate the conveyor belts, the sliders and the machining stations, nine sensors are available.
+Four of sensors are switches associated with the motorized sliders to signal that they have reached their travel destinations.
+That is each slider has two switches, one at each end.
+When a slider moves forward, it should stop when it reaches the forward switch (I2 and I4 respectively)\footnote{Ix and Qx refer to the input and output pins of the circuit layout of the indexed line.}.
+As soon as it stops in the forward position, it should retract (Q2 going low and Q1 going high for the first slider and Q4 going low and Q3 going high for the second slider) until it reaches its back switch (I1 and I3 respectively), at which point the slider should stop.
+ 
+The loading conveyor belt (the first one) has two phototransistors (light beams, I7 and I5).
+The phototransistor I7 indicates that a new item has been loaded onto the conveyor belt (and potentially increase the number of part being machined currently in the process).
+The loading conveyor belt should start at that point (Q5 should be set high) and the belt moves at speed $v$ (cm/s).
+When the item reaches the second phototransistor (I5), the milling conveyor belt should start (Q6).
+After a delay $\Delta t_1$, the item should be in front of the first slider, and the slider should move forward (Q2 should be sent high).
+This delay should be
+\begin{equation} \label{eq:delay1}
+ \Delta t_1 = \frac{d_1}{v}
+\end{equation}
+where $d_1$ is the distance in centimeters from the second phototransistor (I5) to the other side (or across) the milling conveyor belt.
+
+The part or item shall then travel on the milling conveyor belt, and eventually cut the light beam of the third phototransistor (I6).
+At that point, the milling conveyor belt should be stopped (Q6).
+If the phototransistor is just under the milling machine, a small delay should be added (e.g., $r/v$, with $r$ being the radius of the item).
+The milling machine (Q7 set high) should be turned on for 5 seconds, after which the milling conveyor belt should start again, as well as the drilling conveyor belt (Q8).
+
+The item will travel all the way to the drilling machine phototransistor (I8), at which point both machining conveyor belts should stop (Q6 and Q8).
+The drilling machine should be operated for 5 seconds (Q9).
+The drilling conveyor belt should start again (Q8) as well as the offloading conveyor belt (Q10).
+After a delay of $\Delta t_2$, calculated in a similar fashion as equation \ref{eq:delay1}, the second motor slider should move forward the item such that it is transferred to the final conveyor belt.
+The drilling conveyor belt should be stopped (Q8).
+The second slider will trip its forward switch (I3) at which time it should stop (Q4 going low) and return backwards (Q3 going high) until the back switch (I4) is tripped when the slider is stopped (Q3 going low).
+As the item passes the last phototransistor (Q10), the final conveyor belt should be stopped. (If an item counter is used, it should be decremented.)

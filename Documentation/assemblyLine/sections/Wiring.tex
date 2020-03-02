@@ -1,0 +1,48 @@
+% Wiring
+
+There are two ways to connect the Indexed line to the PLC unit:
+\begin{itemize}
+  \item Using a 26 pin connector,
+  \item Using the 24 wires that we can connect individually.
+\end{itemize}
+The table bellow shows how the 26 pin connector is connected to the PLC.
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c| } 
+ \hline
+ Pin & Signal & PLC connection & Color \\ 
+ \hline
+  1 & +24V Actuators & NC & Brown \\ 
+  2 & +24V Sensors & NC & Red \\ 
+  3 & GND & NC & Orange \\ 
+  4 & GND & DI 1 & Yellow \\ 
+  5 & I1 & DI 1 & Green \\ 
+  6 & I2 & DI 2 & Blue \\ 
+  7 & I3 & DI 3 & Purple \\ 
+  8 & I4 & DI 4 & Gray \\ 
+  9 & I5 & DI 5 & White \\ 
+  10 & I6 & DI 6 & Black \\ 
+  11 & I7 & DI 7 & Brown \\ 
+  12 & I8 & DI 8 & Red \\ 
+  13 & I9 & DI 11 & Orange \\ 
+  14 & NC & NC & Yellow \\ 
+  15 & Q1 & DO 1 & Green \\ 
+  16 & Q2& DO 1 & Blue \\ 
+  17 & Q3 & DO 1 & Purple \\ 
+  18 & Q4 & DO 1 & Gray \\ 
+  19 & Q5 & DO 1 & White \\ 
+  20 & Q6 & DO 1 & Black \\ 
+  21 & Q7 & DO 1 & Brown \\ 
+  22 & Q8 & DO 1 & Red \\ 
+  23 & Q9 & DO 1 & Orange \\ 
+  24 & Q10 & DO 1 & Yellow \\ 
+  25 & GND & NC & Green \\ 
+  26 & GND & NC & Blue \\ 
+\hline
+\end{tabular}
+\end{center}
+
+``DI'' stands for the Siemens Digital Input module and ``DO'' for the Digital Output module.
+``NC'' indicates that there is no connection at that end of the wire.
+The connection 9 and 10 on the PLC connectors are skipped since they can be used as linked connection between the left and right side of the connector.
+The power and grown cables are not connected via the 26 pin connector because we had initially used the single wired inputs and no analysis was done to support the use of the thin wires to power the Indexed Line.
